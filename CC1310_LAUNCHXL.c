@@ -358,6 +358,15 @@ GPIO_PinConfig gpioPinConfigs[] = {
 
     /* SPI Flash CSN */
     GPIOCC26XX_DIO_20 | GPIO_CFG_OUT_STD | GPIO_CFG_OUT_STR_HIGH | GPIO_CFG_OUT_HIGH,
+
+    // manual SPI CS, pull up
+    GPIOCC26XX_DIO_15 | GPIO_CFG_OUT_OD_PU | GPIO_CFG_OUT_STR_MED | GPIO_CFG_OUT_HIGH,
+
+    // epaper RST
+    GPIOCC26XX_DIO_01 | GPIO_CFG_OUT_OD_PU | GPIO_CFG_OUT_STR_MED | GPIO_CFG_OUT_HIGH,
+    // epaper DC
+    GPIOCC26XX_DIO_11 | GPIO_CFG_OUT_OD_PU | GPIO_CFG_OUT_STR_MED | GPIO_CFG_OUT_HIGH,
+
 };
 
 /*
@@ -643,7 +652,7 @@ const SPICC26XXDMA_HWAttrsV1 spiCC26XXDMAHWAttrs[CC1310_LAUNCHXL_SPICOUNT] = {
         .misoPin            = CC1310_LAUNCHXL_SPI0_MISO,
         .clkPin             = CC1310_LAUNCHXL_SPI0_CLK,
         .csnPin             = CC1310_LAUNCHXL_SPI0_CSN,
-//        .minDmaTransferSize = 10
+      //  .minDmaTransferSize = 10
     },
     {
         .baseAddr           = SSI1_BASE,
@@ -658,7 +667,7 @@ const SPICC26XXDMA_HWAttrsV1 spiCC26XXDMAHWAttrs[CC1310_LAUNCHXL_SPICOUNT] = {
         .misoPin            = CC1310_LAUNCHXL_SPI1_MISO,
         .clkPin             = CC1310_LAUNCHXL_SPI1_CLK,
         .csnPin             = CC1310_LAUNCHXL_SPI1_CSN,
-//        .minDmaTransferSize = 10
+      //  .minDmaTransferSize = 10
     }
 };
 
