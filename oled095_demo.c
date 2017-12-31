@@ -486,14 +486,91 @@ void Rainbow()
         Fill_Block(0x54,Max_Column,0x00,Max_Row,0x00,0x00);
 }
 
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//  Show Pattern (Partial or Full Screen)
+//
+//    a: Column Address of Start
+//    b: Column Address of End
+//    c: Row Address of Start
+//    d: Row Address of End
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+void Show_64k_Pattern(unsigned char *Data_Pointer, unsigned char a, unsigned char b, unsigned char c, unsigned char d)
+{
+    unsigned char *Src_Pointer;
+    unsigned int i,j;
+    j=(b-a+1)*(d-c+1);
+        Src_Pointer=Data_Pointer;
+        Set_Column_Address(a,b);
+        Set_Row_Address(c,d);
+    //  Set_Write_RAM();
+
+        /*for(i=0;i<(d-c+1);i++)
+        {
+            for(j=0;j<(b-a+1);j++)
+            {
+                Write_Data(*Src_Pointer);
+                Src_Pointer++;
+                Write_Data(*Src_Pointer);
+                Src_Pointer++;
+            }
+        }
+    }*/
+    //      Set_Column_Address(a,b);
+    //  Set_Row_Address(c,d);
+    for (i = 0; i<j; i++)
+    {       Write_Data(*Src_Pointer);
+                Src_Pointer++;
+                Write_Data(*Src_Pointer);
+                Src_Pointer++;
+    }
+}
+
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+//  Show Checkboard (Full Screen)
+//-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
+void Checkerboard()
+{
+unsigned char i,j;
+
+    Set_Column_Address(0x00,0x5F);
+    Set_Row_Address(0x00,0x3F);
+//  Set_Write_RAM();
+
+    for(i=0;i<64;i++)
+    {
+        for(j=0;j<96;j++)
+        {
+            Write_Data(0xFF);
+            Write_Data(0xFF);
+            Write_Data(0x00);
+            Write_Data(0x00);
+        }
+        for(j=0;j<96;j++)
+        {
+            Write_Data(0x00);
+            Write_Data(0x00);
+            Write_Data(0xFF);
+            Write_Data(0xFF);
+        }
+    }
+}
+
+
+// 50=> 0.5 second
+void Delay(unsigned int ms)
+{
+    usleep(ms*1000*10);
+}
+
+#include "gimage.h"
+
 void demo()
 {
     OLED_Init();
     Fill_RAM(0x00,0x00);                        // Clear Screen
 
     Rainbow();
-#if 0
-    //Test();
+
     while(1)
       {
        Fill_RAM(0x00,0x00);     // Clear Screen
@@ -544,7 +621,6 @@ void demo()
        Fill_RAM(0xf8,0x1f);                   //  zi
        Delay(50);
       }
-#endif
 }
 
 /*
